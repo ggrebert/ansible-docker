@@ -1,0 +1,32 @@
+stages:
+  - build
+
+.build: &build
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" "$CI_REGISTRY" --password-stdin
+    - export IMAGE_VERSION=$( set -- $CI_JOB_NAME && echo $2 )
+    - export PYTHON_VERSION=$( set -- $CI_JOB_NAME && echo $3 )
+    - export ANSIBLE_PIP_VERSION=$( set -- $CI_JOB_NAME && echo $4 )
+    - >
+      docker build \
+        -t ${CI_REGISTRY_IMAGE}:${IMAGE_VERSION} \
+        --build-arg python_version=${PYTHON_VERSION} \
+        --build-arg ansible_pip_version=${ANSIBLE_PIP_VERSION} \
+        .
+    - docker run -t --rm ${CI_REGISTRY_IMAGE}:${IMAGE_VERSION}
+    - >
+      if [ "$CI_COMMIT_REF_NAME" == "master" ]; then
+        docker push ${CI_REGISTRY_IMAGE}:${IMAGE_VERSION}
+      fi
+
+build latest 3: *build
+build pyhon3-latest 3: *build
+build pyhon3.6-latest 3.6: *build
+build pyhon3.7-latest 3.7: *build
+build pyhon2-latest 2: *build
+build 2 3 <3: *build
+build 2.7 3 <2.8: *build
