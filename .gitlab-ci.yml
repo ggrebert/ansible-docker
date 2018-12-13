@@ -69,9 +69,4 @@ build pyhon2-latest 2: *build
 build 2 3 <3: *build
 build 2.7 3 <2.8: *build
 
-clair pyhon3-latest: *clair
-clair pyhon3.6-latest: *clair
-clair pyhon3.7-latest: *clair
-clair pyhon2-latest: *clair
-clair 2: *clair
-clair 2.7: *clair
+build latest: *clair
