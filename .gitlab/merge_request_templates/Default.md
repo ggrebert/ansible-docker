@@ -17,3 +17,4 @@ Closes #
 - [ ] Check if `Remove source branch when merge request is accepted.` button is checked.
 - [ ] Check if commits are squashed.
 - [ ] Update or add ~"documentation"
+- [ ] Remove review `Docker` images
