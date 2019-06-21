@@ -15,6 +15,8 @@ This image is based on `debian`.
 
 * `latest`, `pyhon3-latest`
   Latest ansible version with latest python 3 version
+* `2.8`
+  Latest release from 2.8 branch with latest python 3 version
 * `2.7`
   Latest release from 2.7 branch with latest python 3 version
 * `pyhon3.6-latest`
